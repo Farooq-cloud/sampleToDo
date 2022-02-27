@@ -11,7 +11,7 @@ pipeline{
     stages{
         stage('git clone'){
             steps{
-                git https://github.com/Farooq-cloud/sampleToDo.git
+                git 'https://github.com/Farooq-cloud/sampleToDo.git'
 
             }
         }
