@@ -1,0 +1,34 @@
+pipeline{
+    agent any
+
+    parameters{
+        string(defaultValue:"none", description:'Enter Target Server Name', name:'server_name')
+        booleanParam(name:'deploy_envirnoment', defaultValue:'true', description:'yes')
+    }
+    triggers {
+    pollSCM '* * * * *'
+    }
+    stages{
+        stage('git clone'){
+            steps{
+                git https://github.com/Farooq-cloud/sampleToDo.git
+
+            }
+        }
+        
+        stage('triggering main job'){
+            steps{
+                build job: 'poc/child_job', \
+                parameters: [string(name: 'server_name', value: String.valueOf(server_name)), booleanParam(name: 'deploy_envirnoment', value: String.valueOf(deploy_envirnoment))], \
+                propagate: false
+            }
+
+        }
+        stage('validating params'){
+            steps{
+                sh "echo ${server_name}"
+                sh "echo ${params.deploy_envirnoment}"
+            }
+        }
+    }
+}
