@@ -12,6 +12,7 @@ pipeline{
         stage('git clone'){
             steps{
                 git 'https://github.com/Farooq-cloud/sampleToDo.git'
+                sh 'ls -l'
 
             }
         }
